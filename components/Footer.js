@@ -14,6 +14,7 @@ export default function Footer() {
           <Link href="/stories">Stories</Link>
           <Link href="/videos">Videos</Link>
           <Link href="/about">About</Link>
+          <Link href="/faq">FAQ</Link>
           <Link href="/work-with-me">Work with me</Link>
         </div>
         <div className="text-sm flex flex-col gap-2" style={{ color: "var(--muted)" }}>

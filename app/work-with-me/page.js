@@ -12,15 +12,61 @@ import {
   Starburst,
 } from "@/components/icons";
 
+const BASE = "https://avniinireland.com";
+
 export const metadata = {
   title: "Work with me",
   description:
-    "Brand partnerships, student mentoring, and small-business consulting with Avni in Ireland — plus the collaborators I build with.",
+    "Brand partnerships, 1:1 mentoring for internationals moving to Ireland, and small-business tech consulting with Avni in Ireland — plus the collaborators I build with.",
+  alternates: { canonical: `${BASE}/work-with-me` },
+  openGraph: {
+    title: "Work with me · Avni in Ireland",
+    description:
+      "Sponsored content, 1:1 student mentoring for moving to Ireland, and business tech consulting.",
+    url: `${BASE}/work-with-me`,
+    type: "website",
+    images: ["/opengraph-image"],
+  },
 };
 
 // Stats come from data/site-stats.json, editable via /dashboard — re-read
 // every request instead of freezing at build time.
 export const dynamic = "force-dynamic";
+
+// Service schema so "who mentors students moving to Ireland?" style queries
+// can resolve to a real, named provider rather than just a blog post.
+const servicesJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": `${BASE}/work-with-me#mentoring`,
+      name: "1:1 mentoring for internationals moving to Ireland",
+      description:
+        "One-to-one advisory sessions covering jobs and applications, accommodation, cost of living, college life in Dublin, and career direction after graduation — based on first-hand experience of moving from India to Ireland and working here.",
+      provider: { "@id": `${BASE}/#avni` },
+      areaServed: { "@type": "Country", name: "Ireland" },
+      audience: { "@type": "Audience", audienceType: "International students moving to Ireland" },
+      serviceType: "Education and career mentoring",
+    },
+    {
+      "@type": "Service",
+      "@id": `${BASE}/work-with-me#brand`,
+      name: "Brand partnerships and sponsored content",
+      description:
+        "Sponsored videos, Instagram Reels and posts, long-term ambassadorships, and travel or experience collaborations, reaching international students abroad and the Indian diaspora.",
+      provider: { "@id": `${BASE}/#avni` },
+      serviceType: "Influencer marketing",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: BASE },
+        { "@type": "ListItem", position: 2, name: "Work with me", item: `${BASE}/work-with-me` },
+      ],
+    },
+  ],
+};
 
 const offerings = [
   { Icon: VideoIcon, title: "Sponsored videos", desc: "Dedicated or integrated placements woven naturally into a vlog." },
@@ -71,6 +117,7 @@ export default function WorkWithMePage() {
 
   return (
     <div className="container-x py-12 max-w-3xl">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesJsonLd) }} />
       <h1 className="font-display text-4xl mb-3" style={{ fontFamily: "var(--font-display)" }}>
         Work with me
         <InlineDoodle rotate={10}>

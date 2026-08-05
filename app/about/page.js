@@ -12,10 +12,46 @@ import {
   RainbowDoodle,
 } from "@/components/Doodles";
 
+const BASE = "https://avniinireland.com";
+
 export const metadata = {
   title: "About",
   description:
-    "From Aligarh to Dublin — the story behind Avni in Ireland: engineer, analyst, creator, and one very big Indian wedding back home in India.",
+    "From Aligarh to Dublin — the story behind Avni in Ireland: computer-science engineer, MSc Data Analytics at NCI, Data Analyst at permanent tsb, creator, and one very big Indian wedding back home in India.",
+  alternates: { canonical: `${BASE}/about` },
+  openGraph: {
+    title: "About · Avni in Ireland",
+    description:
+      "Aligarh to Dublin: the full story — the career switch, the move, the job, and the wedding.",
+    url: `${BASE}/about`,
+    type: "profile",
+    images: ["/opengraph-image"],
+  },
+};
+
+// ProfilePage is the type Google supports specifically for creator/person
+// profiles — it anchors this page as *the* canonical description of the Person
+// entity declared site-wide in the root layout.
+const profileJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": `${BASE}/about#profilepage`,
+      url: `${BASE}/about`,
+      name: "About Avni",
+      isPartOf: { "@id": `${BASE}/#site` },
+      mainEntity: { "@id": `${BASE}/#avni` },
+      about: { "@id": `${BASE}/#avni` },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: BASE },
+        { "@type": "ListItem", position: 2, name: "About", item: `${BASE}/about` },
+      ],
+    },
+  ],
 };
 
 function Chapter({ title, doodle, children }) {
@@ -42,6 +78,7 @@ const facts = [
 export default function AboutPage() {
   return (
     <div className="container-x py-12 max-w-2xl">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }} />
       <h1 className="font-display text-4xl mb-6" style={{ fontFamily: "var(--font-display)" }}>
         Hi, I'm <span className="marker">Avni</span>
         <InlineDoodle rotate={10}>

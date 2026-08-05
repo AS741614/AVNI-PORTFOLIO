@@ -10,16 +10,39 @@ export async function generateStaticParams() {
   return stories.map((s) => ({ slug: s.slug }));
 }
 
+const BASE = "https://avniinireland.com";
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const story = await getStory(slug);
   if (!story) return {};
+  const title = story.displayTitle || story.title;
+  const description =
+    story.article?.metaDescription ||
+    story.summary?.slice(0, 155) ||
+    story.description?.slice(0, 155) ||
+    `${title} — a story from Avni in Ireland.`;
+  const url = `${BASE}/stories/${slug}`;
+
   return {
-    title: story.displayTitle || story.title,
-    description:
-      story.article?.metaDescription || story.description?.slice(0, 155),
+    title,
+    description,
     keywords: story.article?.tags,
-    openGraph: { images: story.thumbnail ? [story.thumbnail] : [] },
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "article",
+      publishedTime: story.published,
+      images: story.thumbnail ? [story.thumbnail] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: story.thumbnail ? [story.thumbnail] : [],
+    },
   };
 }
 
@@ -41,15 +64,45 @@ export default async function StoryPage({ params }) {
 
   const headline = story.displayTitle || story.title;
 
-  // VideoObject schema for rich SEO results
+  const url = `${BASE}/stories/${slug}`;
+  const description = story.article?.metaDescription || story.summary || story.description;
+
+  // VideoObject drives video rich results and gives answer engines the actual
+  // watchable asset; the graph ties every story back to the same Person entity
+  // declared in the root layout, so citations resolve to one consistent author.
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": story.videoId ? "VideoObject" : "Article",
-    name: headline,
-    headline,
-    description: story.article?.metaDescription || story.description,
-    uploadDate: story.published,
-    thumbnailUrl: story.thumbnail ? [story.thumbnail] : undefined,
+    "@graph": [
+      {
+        "@type": story.videoId ? "VideoObject" : "Article",
+        "@id": `${url}#content`,
+        name: headline,
+        headline,
+        description,
+        uploadDate: story.published,
+        datePublished: story.published,
+        thumbnailUrl: story.thumbnail ? [story.thumbnail] : undefined,
+        ...(story.videoId && {
+          embedUrl: `https://www.youtube.com/embed/${story.videoId}`,
+          contentUrl: `https://www.youtube.com/watch?v=${story.videoId}`,
+        }),
+        author: { "@id": `${BASE}/#avni` },
+        publisher: { "@id": `${BASE}/#avni` },
+        creator: { "@id": `${BASE}/#avni` },
+        inLanguage: "en",
+        isPartOf: { "@id": `${BASE}/#site` },
+        mainEntityOfPage: url,
+        ...(story.article?.tags?.length && { keywords: story.article.tags.join(", ") }),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: BASE },
+          { "@type": "ListItem", position: 2, name: "Stories", item: `${BASE}/stories` },
+          { "@type": "ListItem", position: 3, name: headline, item: url },
+        ],
+      },
+    ],
   };
 
   return (

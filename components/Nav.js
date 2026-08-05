@@ -10,6 +10,7 @@ const links = [
   { href: "/stories", label: "Stories" },
   { href: "/videos", label: "Videos" },
   { href: "/about", label: "About" },
+  { href: "/faq", label: "FAQ" },
   { href: "/work-with-me", label: "Work with me" },
 ];
 
@@ -29,7 +30,7 @@ export default function Nav() {
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden sm:flex items-center gap-6 text-sm font-medium">
+        <div className="hidden lg:flex items-center gap-6 text-sm font-medium">
           {links.map((l) => {
             const active = pathname === l.href;
             return (
@@ -49,7 +50,7 @@ export default function Nav() {
         </div>
 
         {/* Mobile: subscribe + hamburger */}
-        <div className="flex sm:hidden items-center gap-3">
+        <div className="flex lg:hidden items-center gap-3">
           <a href={SITE.youtube.url} target="_blank" rel="noopener noreferrer" className="btn-pop !py-1.5 !px-3.5 text-xs">
             <PlayIcon size={12} /> Subscribe
           </a>
@@ -67,7 +68,7 @@ export default function Nav() {
       {/* Mobile slide-down panel */}
       {open && (
         <div
-          className="sm:hidden halftone"
+          className="lg:hidden halftone"
           style={{
             position: "absolute",
             top: "100%",

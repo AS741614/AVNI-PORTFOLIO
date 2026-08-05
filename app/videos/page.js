@@ -5,7 +5,16 @@ import { InlineDoodle, BoltDoodle } from "@/components/Doodles";
 
 export const metadata = {
   title: "Videos",
-  description: "Watch the latest videos from Avni in Ireland.",
+  description:
+    "The full video archive from Avni in Ireland — Ireland travel, Dublin student life, and Indian culture abroad. Tap play and go.",
+  alternates: { canonical: "https://avniinireland.com/videos" },
+  openGraph: {
+    title: "Videos · Avni in Ireland",
+    description: "No reading required. Tap play, thumb through, repeat.",
+    url: "https://avniinireland.com/videos",
+    type: "website",
+    images: ["/opengraph-image"],
+  },
 };
 
 export default async function VideosPage() {
