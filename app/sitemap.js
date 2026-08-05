@@ -20,6 +20,8 @@ export default async function sitemap() {
     { path: "", priority: 1.0, changeFrequency: "daily" },
     { path: "/about", priority: 0.9, changeFrequency: "monthly" },
     { path: "/faq", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/guides", priority: 0.9, changeFrequency: "weekly" },
+    { path: "/guides/moving-to-ireland-from-india", priority: 0.9, changeFrequency: "monthly" },
     { path: "/work-with-me", priority: 0.8, changeFrequency: "monthly" },
     { path: "/stories", priority: 0.8, changeFrequency: "daily" },
     { path: "/videos", priority: 0.7, changeFrequency: "daily" },

@@ -24,10 +24,19 @@ export async function generateMetadata({ params }) {
     `${title} — a story from Avni in Ireland.`;
   const url = `${BASE}/stories/${slug}`;
 
+  // Thin-content guard: a page whose only body text is the "written version is
+  // on its way" fallback has nothing for Google to rank, and a cluster of such
+  // pages drags down the whole site's quality signal. Keep those out of the
+  // index (but still followed, so link equity flows) until real article text
+  // exists — either hand-written or from `npm run generate:articles`.
+  const bodyText = story.article?.body || story.description || "";
+  const isThin = bodyText.trim().length < 200;
+
   return {
     title,
     description,
     keywords: story.article?.tags,
+    ...(isThin && { robots: { index: false, follow: true } }),
     alternates: { canonical: url },
     openGraph: {
       title,
