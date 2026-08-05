@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PlayIcon } from "@/components/icons";
 
 function formatDate(d) {
   try {
@@ -14,32 +15,31 @@ function formatDate(d) {
 
 export default function StoryCard({ story }) {
   return (
-    <Link
-      href={`/stories/${story.slug}`}
-      className="group block rounded-2xl overflow-hidden border transition-transform hover:-translate-y-1"
-      style={{ borderColor: "var(--line)", background: "#fff" }}
-    >
-      <div className="aspect-video w-full overflow-hidden" style={{ background: "var(--amber-soft)" }}>
-        {story.thumbnail ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={story.thumbnail}
-            alt={story.title}
-            className="w-full h-full object-cover transition-transform group-hover:scale-105"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-3xl" style={{ color: "var(--amber)" }}>
-            ▶
-          </div>
-        )}
+    <Link href={`/stories/${story.slug}`} className="card-pop group block overflow-hidden">
+      <div className="relative">
+        <div
+          className="aspect-video w-full overflow-hidden"
+          style={{ borderBottom: "2px solid var(--ink)", background: "var(--amber-soft)" }}
+        >
+          {story.thumbnail ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={story.thumbnail}
+              alt={story.title}
+              className="w-full h-full object-cover transition-transform group-hover:scale-105"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center halftone" style={{ color: "var(--red)" }}>
+              <PlayIcon size={36} />
+            </div>
+          )}
+        </div>
+        <span className="sticker absolute -bottom-3 left-4">{formatDate(story.published)}</span>
       </div>
-      <div className="p-4">
-        <h3 className="font-medium leading-snug mb-1">{story.displayTitle || story.title}</h3>
-        <p className="text-xs" style={{ color: "var(--muted)" }}>
-          Story · {formatDate(story.published)}
-        </p>
+      <div className="p-4 pt-5">
+        <h3 className="font-bold leading-snug mb-1">{story.displayTitle || story.title}</h3>
         {(story.summary || story.description) && (
-          <p className="text-sm mt-2 line-clamp-2" style={{ color: "var(--muted)" }}>
+          <p className="text-sm mt-1 line-clamp-2" style={{ color: "var(--muted)" }}>
             {story.summary || story.description}
           </p>
         )}

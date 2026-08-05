@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SITE } from "@/lib/config";
 import { getStories, getStory } from "@/lib/youtube";
 import StoryCard from "@/components/StoryCard";
 import Newsletter from "@/components/Newsletter";
@@ -72,7 +73,10 @@ export default async function StoryPage({ params }) {
       </p>
 
       {/* Embedded video */}
-      <div className="aspect-video w-full rounded-2xl overflow-hidden mb-8" style={{ background: "var(--amber-soft)" }}>
+      <div
+        className="aspect-video w-full rounded-2xl overflow-hidden mb-8"
+        style={{ background: "var(--amber-soft)", border: "2px solid var(--ink)", boxShadow: "4px 4px 0 var(--ink)" }}
+      >
         {story.videoId ? (
           <iframe
             className="w-full h-full"
@@ -107,7 +111,7 @@ export default async function StoryPage({ params }) {
           ? story.description.split("\n").filter(Boolean).map((p, i) => (
               <p key={i} className="mb-4">{p}</p>
             ))
-          : <p style={{ color: "var(--muted)" }}>A written version of this story will appear here, generated from the video.</p>}
+          : <p style={{ color: "var(--muted)" }}>The written version is on its way — honestly, the video says it better anyway. Hit play above.</p>}
 
         {story.article?.tags?.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-8">
@@ -120,9 +124,11 @@ export default async function StoryPage({ params }) {
         )}
       </div>
 
-      <div className="mt-10 rounded-2xl p-5 flex items-center justify-between" style={{ background: "var(--warm)" }}>
-        <p className="text-sm font-medium">Like this? Subscribe for the next one.</p>
-        <a href="/" className="text-sm font-medium" style={{ color: "var(--amber)" }}>▶ Subscribe</a>
+      <div className="card-pop mt-10 p-5 flex items-center justify-between gap-3" style={{ background: "var(--yellow)" }}>
+        <p className="text-sm font-bold">Like this? Subscribe for the next one.</p>
+        <a href={SITE.youtube.url} target="_blank" rel="noopener noreferrer" className="btn-pop !py-1.5 !px-4">
+          ▶ Subscribe
+        </a>
       </div>
 
       {/* Related */}

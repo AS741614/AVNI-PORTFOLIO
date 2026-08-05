@@ -16,18 +16,17 @@ export default function SubscribeBar() {
   if (closed || !show) return null;
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-50 border-t" style={{ borderColor: "var(--line)", background: "var(--warm)" }}>
+    <div className="fixed bottom-0 inset-x-0 z-50" style={{ borderTop: "2px solid var(--ink)", background: "var(--paper)" }}>
       <div className="container-x py-3 flex items-center justify-between gap-3">
-        <p className="text-sm font-medium">
-          Enjoying the journey? Don't miss a story.
+        <p className="text-sm font-bold">
+          Liking the chaos? There's more every week.
         </p>
         <div className="flex items-center gap-2">
           <a
             href={SITE.youtube.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full px-4 py-1.5 text-sm font-medium text-white whitespace-nowrap"
-            style={{ background: "var(--ink)", color: "#fff" }}
+            className="btn-pop !py-1.5 !px-4"
           >
             ▶ Subscribe
           </a>

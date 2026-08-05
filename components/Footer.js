@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { SITE } from "@/lib/config";
+import { InlineDoodle, ChaiDoodle, ShamrockDoodle } from "@/components/Doodles";
 
 export default function Footer() {
   return (
-    <footer className="border-t mt-20" style={{ borderColor: "var(--line)" }}>
+    <footer className="mt-20" style={{ borderTop: "2px solid var(--ink)" }}>
       <div className="container-x py-12 grid gap-8 sm:grid-cols-3">
         <div>
           <p className="font-medium text-lg mb-2">{SITE.name}</p>
@@ -22,7 +23,13 @@ export default function Footer() {
         </div>
       </div>
       <div className="container-x pb-8 text-xs" style={{ color: "var(--muted)" }}>
-        © {new Date().getFullYear()} {SITE.name}. Made with care in Ireland.
+        © {new Date().getFullYear()} {SITE.name}. Made in Dublin, with chai and questionable wifi.
+        <InlineDoodle rotate={-8}>
+          <ChaiDoodle size={22} />
+        </InlineDoodle>
+        <InlineDoodle rotate={8}>
+          <ShamrockDoodle size={20} />
+        </InlineDoodle>
       </div>
     </footer>
   );

@@ -1,0 +1,43 @@
+name: avni
+
+networks:
+  # Attaches only to the already-running shared Caddy's network (owned by
+  # the "docker"/photossense compose project) so Caddy can reverse_proxy to
+  # this container by name — this project has no database or sibling
+  # service, so unlike vtrust it needs no internal-only network of its own.
+  docker_default:
+    external: true
+
+services:
+  avni:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: avni
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      DASHBOARD_PASSWORD: ${DASHBOARD_PASSWORD}
+      DASHBOARD_SESSION_SECRET: ${DASHBOARD_SESSION_SECRET}
+      INSTAGRAM_ACCESS_TOKEN: ${INSTAGRAM_ACCESS_TOKEN:-}
+      INSTAGRAM_USER_ID: ${INSTAGRAM_USER_ID:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      NEWSLETTER_API_KEY: ${NEWSLETTER_API_KEY:-}
+    volumes:
+      - avni_data:/app/data
+      - avni_articles:/app/content/articles
+    networks:
+      - docker_default
+    # Our own Node code, running as the non-root 'node' user (Dockerfile) —
+    # doesn't need any Linux capabilities, and this is a lightweight
+    # content site with no DB, so a modest cap is plenty.
+    mem_limit: 384m
+    cpus: 0.5
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  avni_data:
+  avni_articles:

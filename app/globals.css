@@ -1,13 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --cream: #fbf7f0;
-  --warm: #f3e7d3;
-  --ink: #2a2520;
-  --muted: #6f655a;
-  --amber: #b9742a;
-  --amber-soft: #f6ead7;
-  --line: #e9ddc9;
+  /* ── Pop-art palette ── */
+  --paper: #ffffff;
+  --red: #e4002b;
+  --ink: #131313;
+  --cobalt: #2b4bf2;
+  --yellow: #ffd23f;
+  --muted: #5b5b5b;
+
+  /* Legacy aliases — older inline styles reference these names */
+  --cream: var(--paper);
+  --warm: #fff4f6;
+  --amber: var(--red);
+  --amber-soft: #ffe3e8;
+  --line: var(--ink);
 }
 
 html {
@@ -15,14 +22,20 @@ html {
 }
 
 body {
-  background: var(--cream);
+  background: var(--paper);
   color: var(--ink);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
+.font-display,
 .font-serif-display {
-  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.08;
+}
+
+.font-script {
+  font-family: var(--font-script), cursive;
 }
 
 .container-x {
@@ -31,6 +44,154 @@ body {
   margin: 0 auto;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+/* ── Pop-art system ── */
+
+.btn-pop,
+.btn-pop-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid var(--ink);
+  border-radius: 9999px;
+  padding: 0.625rem 1.375rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+}
+.btn-pop {
+  background: var(--red);
+  color: #fff;
+}
+.btn-pop-ghost {
+  background: var(--paper);
+  color: var(--ink);
+}
+.btn-pop:hover,
+.btn-pop-ghost:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.btn-pop:active,
+.btn-pop-ghost:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.card-pop {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 1rem;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+a.card-pop:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--ink);
+}
+
+.sticker {
+  display: inline-block;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 9999px;
+  padding: 0.125rem 0.625rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  box-shadow: 2px 2px 0 var(--ink);
+  transform: rotate(-3deg);
+}
+.sticker-yellow {
+  background: var(--yellow);
+}
+.sticker-red {
+  background: var(--red);
+  color: #fff;
+}
+
+.chip {
+  display: inline-block;
+  border: 2px solid var(--ink);
+  border-radius: 9999px;
+  padding: 0.125rem 0.625rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--yellow);
+}
+
+.halftone {
+  background-image: radial-gradient(rgba(19, 19, 19, 0.16) 1.1px, transparent 1.1px);
+  background-size: 12px 12px;
+}
+.halftone-red {
+  background-image: radial-gradient(rgba(228, 0, 43, 0.22) 1.1px, transparent 1.1px);
+  background-size: 12px 12px;
+}
+
+/* Yellow highlighter sweep behind key words */
+.marker {
+  background: linear-gradient(transparent 52%, var(--yellow) 52%, var(--yellow) 92%, transparent 92%);
+  padding: 0 0.15em;
+}
+.marker-red {
+  background: linear-gradient(transparent 52%, #ffb3c2 52%, #ffb3c2 92%, transparent 92%);
+  padding: 0 0.15em;
+}
+
+/* Decorative doodles — absolute, non-interactive, gently bobbing */
+.doodle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+}
+.doodle-float {
+  animation: doodle-float 4.5s ease-in-out infinite;
+}
+@keyframes doodle-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .doodle-float {
+    animation: none;
+  }
+}
+
+/* Die-cut circle sticker around a doodle */
+.diecut {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 9999px;
+  padding: 0.5rem;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.logo-sticker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.125rem;
+  height: 2.125rem;
+  border-radius: 9999px;
+  background: var(--red);
+  color: #fff;
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  transform: rotate(-6deg);
+  font-family: var(--font-display), sans-serif;
+  font-size: 1rem;
+  line-height: 1;
 }
 
 @layer base {
