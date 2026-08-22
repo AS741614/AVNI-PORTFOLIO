@@ -270,7 +270,7 @@ a.card-pop:hover {
 /* Plane follows a real elliptical flight path and banks into the direction
    of travel (offset-rotate: auto) rather than orbiting a pivot rigidly. */
 .plane-flight {
-  offset-path: path("M 240,100 A 150,120 0 0,1 240,340 A 150,120 0 0,1 240,100 L 240,220 A 75,75 0 0,1 390,220 A 75,75 0 0,1 240,220 A 75,75 0 0,0 90,220 A 75,75 0 0,0 240,220 Z");
+  offset-path: path("M 250,120 A 155,130 0 0,1 250,380 A 155,130 0 0,1 250,120 L 250,250 A 78,78 0 0,1 406,250 A 78,78 0 0,1 250,250 A 78,78 0 0,0 94,250 A 78,78 0 0,0 250,250 Z");
   offset-rotate: auto;
   animation: plane-fly var(--d, 16s) linear infinite;
 }
@@ -340,19 +340,25 @@ a.card-pop:hover {
    fixed 440x400 and scales down bodily on narrow screens). */
 .hero-scene-box {
   position: relative;
-  width: 480px;
-  height: 440px;
+  width: 500px;
+  height: 500px;
   flex: 0 0 auto;
+}
+@media (max-width: 1279px) {
+  .hero-scene-box {
+    transform: scale(0.88);
+    margin: -30px -30px;
+  }
 }
 @media (max-width: 1023px) {
   .hero-scene-box {
-    transform: scale(0.84);
-    margin: -35px -38px;
+    transform: scale(0.8);
+    margin: -50px -50px;
   }
 }
 @media (max-width: 639px) {
   .hero-scene-box {
-    transform: scale(0.72);
-    margin: -62px -67px;
+    transform: scale(0.64);
+    margin: -90px -90px;
   }
 }

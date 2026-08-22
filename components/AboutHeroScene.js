@@ -16,7 +16,7 @@ import {
   DashArrow,
 } from "@/components/TravelStickers";
 
-const BOX = { w: 480, h: 440 };
+const BOX = { w: 500, h: 500 };
 
 // An object on a colour blob.
 function Sticker({ children, blob, size = 84, tilt = 0 }) {
@@ -67,18 +67,17 @@ function OrbitRing({ radius, duration, dir = "cw", items }) {
 // Two counter-rotating orbits at different radii and speeds, so the icons
 // never settle into a fixed ring. The plane sits above everything.
 const INNER = [
-  { angle: 20, size: 76, blob: "var(--lav)", tilt: -6, fx: "bob", d: "5.8s", amp: "14px", node: <MountainSticker size={46} /> },
-  { angle: 108, size: 76, blob: "var(--mint)", tilt: 8, fx: "sway", d: "6.4s", delay: ".7s", node: <BookSticker size={46} /> },
-  { angle: 197, size: 76, blob: "var(--sky)", tilt: -7, fx: "pulse", d: "4.9s", delay: "1.3s", amp: "1.14", node: <CameraSticker size={46} /> },
-  { angle: 291, size: 76, blob: "var(--peach)", tilt: 6, fx: "bob", d: "5.3s", delay: ".4s", amp: "16px", node: <MapSticker size={46} /> },
+  { angle: 22, size: 76, blob: "var(--lav)", tilt: -6, fx: "bob", d: "5.8s", amp: "14px", node: <MountainSticker size={46} /> },
+  { angle: 109, size: 76, blob: "var(--mint)", tilt: 8, fx: "sway", d: "6.4s", delay: ".7s", node: <BookSticker size={46} /> },
+  { angle: 196, size: 76, blob: "var(--sky)", tilt: -7, fx: "pulse", d: "4.9s", delay: "1.3s", amp: "1.14", node: <CameraSticker size={46} /> },
+  { angle: 292, size: 76, blob: "var(--peach)", tilt: 6, fx: "bob", d: "5.3s", delay: ".4s", amp: "16px", node: <MapSticker size={46} /> },
 ];
 
 const OUTER = [
-  { angle: 52, blob: "var(--peach)", tilt: 7, fx: "sway", d: "5.6s", delay: ".2s", node: <SailboatSticker size={52} /> },
-  { angle: 137, blob: "var(--blush)", tilt: -5, fx: "bob", d: "4.6s", delay: "1.1s", amp: "18px", node: <PalmSticker size={52} /> },
-  { angle: 199, blob: "var(--butter)", tilt: 9, fx: "sway", d: "6.8s", delay: ".9s", node: <SunHatSticker size={52} /> },
-  { angle: 258, blob: "var(--blush)", tilt: -9, fx: "bob", d: "5.1s", delay: "1.7s", amp: "15px", node: <SuitcaseSticker size={48} /> },
-  { angle: 328, blob: "var(--mint)", tilt: -8, fx: "drift", d: "7.2s", delay: ".5s", amp: "13px", node: <PlaneSticker size={52} /> },
+  { angle: 38, blob: "var(--peach)", tilt: 7, fx: "sway", d: "5.6s", delay: ".2s", node: <SailboatSticker size={52} /> },
+  { angle: 127, blob: "var(--blush)", tilt: -5, fx: "bob", d: "4.6s", delay: "1.1s", amp: "18px", node: <PalmSticker size={52} /> },
+  { angle: 214, blob: "var(--butter)", tilt: 9, fx: "sway", d: "6.8s", delay: ".9s", node: <SunHatSticker size={52} /> },
+  { angle: 305, blob: "var(--mint)", tilt: -8, fx: "drift", d: "7.2s", delay: ".5s", amp: "13px", node: <PlaneSticker size={52} /> },
 ];
 
 export default function AboutHeroScene() {
@@ -92,8 +91,8 @@ export default function AboutHeroScene() {
 
         {/* Icons orbiting the Earth — opposite directions, different speeds */}
         <div style={{ position: "absolute", inset: 0, zIndex: 2 }}>
-          <OrbitRing radius={125} duration="95s" dir="cw" items={INNER} />
-          <OrbitRing radius={176} duration="140s" dir="ccw" items={OUTER} />
+          <OrbitRing radius={132} duration="95s" dir="cw" items={INNER} />
+          <OrbitRing radius={202} duration="140s" dir="ccw" items={OUTER} />
         </div>
 
         {/* Airliner flies in front of everything */}
@@ -102,14 +101,19 @@ export default function AboutHeroScene() {
         </div>
 
         {/* Static hand-drawn accents, out past the orbits in the corners */}
-        <div className="absolute fx fx-pulse" style={{ left: 14, top: 10, zIndex: 3, "--d": "3.7s", "--delay": ".4s", "--amp": "1.25" }}>
+        <div className="absolute fx fx-pulse" style={{ left: 10, top: 8, zIndex: 3, "--d": "3.7s", "--delay": ".4s", "--amp": "1.25" }}>
           <QuestionMarks size={34} />
         </div>
-        <div className="absolute fx fx-sway" style={{ left: 416, top: 8, zIndex: 3, "--d": "5.5s", "--delay": "1.2s" }}>
+        <div className="absolute fx fx-sway" style={{ left: 446, top: 8, zIndex: 3, "--d": "5.5s", "--delay": "1.2s" }}>
           <CompassSticker size={44} />
         </div>
-        <div className="absolute fx fx-drift" style={{ left: 10, top: 388, zIndex: 3, "--d": "6.9s", "--delay": ".8s" }}>
+        <div className="absolute fx fx-drift" style={{ left: 8, top: 452, zIndex: 3, "--d": "6.9s", "--delay": ".8s" }}>
           <DashArrow size={38} color="var(--lav)" />
+        </div>
+        <div className="absolute fx fx-bob" style={{ left: 432, top: 428, zIndex: 3, "--d": "5.1s", "--delay": "1.7s", "--amp": "15px" }}>
+          <Sticker blob="var(--blush)" size={60} tilt={-9}>
+            <SuitcaseSticker size={38} />
+          </Sticker>
         </div>
       </div>
     </div>
