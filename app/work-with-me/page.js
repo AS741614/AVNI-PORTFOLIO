@@ -109,11 +109,17 @@ const collaborators = [
 
 export default function WorkWithMePage() {
   const siteStats = getSiteStats();
-  const stats = [
-    { value: formatCount(siteStats.subscribers), label: "subscribers" },
-    { value: formatCount(siteStats.followers), label: "followers" },
-    { value: siteStats.topRegion, label: "top audience" },
-  ];
+  // Only show real numbers — siteStats.updatedAt stays null until Avni saves
+  // her actual figures via /dashboard, so there's nothing fabricated to show
+  // brands in the meantime.
+  const hasRealStats = Boolean(siteStats.updatedAt);
+  const stats = hasRealStats
+    ? [
+        { value: formatCount(siteStats.subscribers), label: "subscribers" },
+        { value: formatCount(siteStats.followers), label: "followers" },
+        { value: siteStats.topRegion, label: "top audience" },
+      ]
+    : [];
 
   return (
     <div className="container-x py-12 max-w-3xl">
@@ -131,7 +137,8 @@ export default function WorkWithMePage() {
         actually read my own analytics.
       </p>
 
-      {/* Stats row */}
+      {/* Stats row — only rendered once real numbers exist */}
+      {hasRealStats && (
       <div className="flex flex-wrap justify-center sm:justify-between gap-4 mb-12">
         {stats.map((s) => (
           <div key={s.label} className="relative flex items-center justify-center" style={{ width: 170, height: 170 }}>
@@ -148,6 +155,7 @@ export default function WorkWithMePage() {
           </div>
         ))}
       </div>
+      )}
 
       <div className="grid gap-6 sm:grid-cols-2 mb-14">
         {offerings.map((o) => (
