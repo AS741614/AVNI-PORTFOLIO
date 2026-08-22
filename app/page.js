@@ -90,7 +90,7 @@ export default async function Home() {
           <span className="sticker">↻ auto-synced from YouTube</span>
         </div>
         <p className="text-sm mb-6 max-w-lg" style={{ color: "var(--muted)" }}>
-          New video on YouTube? It's already here. Every upload becomes a story on its own — no reposting, no lag.
+          New video on YouTube? It shows up here on its own — synced straight from the channel, no manual reposting.
         </p>
 
         {usingSample && (
