@@ -160,8 +160,48 @@ a.card-pop:hover {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .doodle-float {
+  .doodle-float,
+  .globe-spin,
+  .orbit-pivot,
+  .orbit-counter {
     animation: none;
+  }
+}
+
+/* Globe + orbiting plane, used in the About-page hero scene */
+.globe-spin {
+  animation: globe-spin 22s linear infinite;
+}
+@keyframes globe-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.orbit-pivot {
+  animation: orbit-spin 9s linear infinite;
+}
+@keyframes orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Counter-rotates at the same speed so the plane icon stays upright while it
+   travels around the orbit instead of tumbling with the pivot. */
+.orbit-counter {
+  animation: orbit-counter-spin 9s linear infinite;
+}
+@keyframes orbit-counter-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
   }
 }
 

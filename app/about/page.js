@@ -1,6 +1,9 @@
 import { SITE } from "@/lib/config";
+import { getStories } from "@/lib/youtube";
 import Newsletter from "@/components/Newsletter";
-import { CameraIcon, PlayIcon } from "@/components/icons";
+import VideoSlideshow from "@/components/VideoSlideshow";
+import AboutHeroScene from "@/components/AboutHeroScene";
+import { PlayIcon } from "@/components/icons";
 import {
   Doodle,
   InlineDoodle,
@@ -75,7 +78,9 @@ const facts = [
   "Filming since 2025",
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const stories = await getStories();
+
   return (
     <div className="container-x py-12 max-w-2xl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }} />
@@ -85,12 +90,13 @@ export default function AboutPage() {
           <FlowerDoodle size={30} />
         </InlineDoodle>
       </h1>
-      <div
-        className="aspect-[16/9] rounded-2xl mb-4 flex items-center justify-center halftone relative"
-        style={{ border: "2px solid var(--ink)", boxShadow: "4px 4px 0 var(--ink)", color: "var(--red)" }}
-      >
-        <CameraIcon size={40} />
-        <span className="sticker absolute bottom-3 right-4">real photos coming soon</span>
+      <div className="grid gap-6 sm:grid-cols-2 items-center mb-4">
+        <div className="order-2 sm:order-1">
+          <AboutHeroScene />
+        </div>
+        <div className="order-1 sm:order-2">
+          <VideoSlideshow stories={stories} />
+        </div>
       </div>
 
       {/* Quick facts sticker strip */}

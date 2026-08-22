@@ -113,6 +113,18 @@ export function PlaneDoodle({ size }) {
   );
 }
 
+export function GlobeDoodle({ size }) {
+  return (
+    <Svg size={size} strokeWidth="1.6">
+      <circle cx="12" cy="12" r="9.5" fill="#cfe3ff" />
+      <ellipse cx="12" cy="12" rx="4" ry="9.5" />
+      <path d="M2.5 12h19" />
+      <path d="M4 7.5c4.5 2 11.5 2 16 0" />
+      <path d="M4 16.5c4.5-2 11.5-2 16 0" />
+    </Svg>
+  );
+}
+
 export function RainbowDoodle({ size }) {
   return (
     <Svg size={size} strokeWidth="2.4">
