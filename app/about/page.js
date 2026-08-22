@@ -82,31 +82,42 @@ export default async function AboutPage() {
   const stories = await getStories();
 
   return (
-    <div className="container-x py-12 max-w-2xl">
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }} />
-      <h1 className="font-display text-4xl mb-6" style={{ fontFamily: "var(--font-display)" }}>
-        Hi, I'm <span className="marker">Avni</span>
-        <InlineDoodle rotate={10}>
-          <FlowerDoodle size={30} />
-        </InlineDoodle>
-      </h1>
-      <div className="grid gap-6 sm:grid-cols-2 items-center mb-4">
-        <div className="order-2 sm:order-1">
-          <AboutHeroScene />
-        </div>
-        <div className="order-1 sm:order-2">
-          <VideoSlideshow stories={stories} />
-        </div>
-      </div>
 
-      {/* Quick facts sticker strip */}
-      <div className="flex flex-wrap gap-3 mt-6 mb-2">
-        {facts.map((f, i) => (
-          <span key={f} className={`sticker ${i % 3 === 0 ? "sticker-yellow" : ""}`} style={{ transform: `rotate(${i % 2 === 0 ? -2 : 2}deg)` }}>
-            {f}
-          </span>
-        ))}
-      </div>
+      {/* ── Full-width hero band, dotted grid behind everything ── */}
+      <section className="relative overflow-hidden" style={{ borderBottom: "2px solid var(--ink)" }}>
+        <div className="dot-grid absolute inset-0" aria-hidden="true" />
+        <div className="container-x py-10 sm:py-14 relative">
+          <h1 className="font-display text-4xl sm:text-5xl mb-8" style={{ fontFamily: "var(--font-display)" }}>
+            Hi, I'm <span className="marker">Avni</span>
+            <InlineDoodle rotate={10}>
+              <FlowerDoodle size={32} />
+            </InlineDoodle>
+          </h1>
+
+          <div className="grid gap-8 lg:grid-cols-2 items-center">
+            <div className="order-2 lg:order-1">
+              <AboutHeroScene />
+            </div>
+            <div className="order-1 lg:order-2">
+              <VideoSlideshow stories={stories} />
+            </div>
+          </div>
+
+          {/* Quick facts sticker strip */}
+          <div className="flex flex-wrap gap-3 mt-10">
+            {facts.map((f, i) => (
+              <span key={f} className={`sticker ${i % 3 === 0 ? "sticker-yellow" : ""}`} style={{ transform: `rotate(${i % 2 === 0 ? -2 : 2}deg)` }}>
+                {f}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Article body ── */}
+      <div className="container-x py-12 max-w-2xl">
 
       <Chapter title="It starts in Aligarh">
         <p>
@@ -204,9 +215,10 @@ export default async function AboutPage() {
         </a>
       </div>
 
-      <div className="mt-12">
-        <Newsletter />
+        <div className="mt-12">
+          <Newsletter />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

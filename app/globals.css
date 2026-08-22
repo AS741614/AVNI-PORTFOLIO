@@ -9,6 +9,16 @@
   --yellow: #ffd23f;
   --muted: #5b5b5b;
 
+  /* ── Sticker palette: saturated pop-art, not pastel ── */
+  --mint: #34d399;
+  --lav: #a06cf5;
+  --peach: #ff8c42;
+  --blush: #ff5c8a;
+  --sky: #3d9bff;
+  --butter: #ffd23f;
+  --leaf: #2fbf5f;
+  --ocean: #2f86e0;
+
   /* Legacy aliases — older inline styles reference these names */
   --cream: var(--paper);
   --warm: #fff4f6;
@@ -159,49 +169,104 @@ a.card-pop:hover {
     transform: translateY(-6px);
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .doodle-float,
-  .globe-spin,
-  .orbit-pivot,
-  .orbit-counter {
-    animation: none;
+/* ── Sticker motion system ─────────────────────────────────────────────
+   Each sticker picks a motion type and stagger via CSS vars, so nothing
+   moves in lockstep:  <div class="fx fx-bob" style="--d:6s; --delay:.8s">
+   ------------------------------------------------------------------- */
+.fx {
+  animation-duration: var(--d, 5s);
+  animation-delay: var(--delay, 0s);
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+  will-change: transform;
+}
+.fx-bob {
+  animation-name: fx-bob;
+}
+@keyframes fx-bob {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(var(--amp, 20px) * -1));
+  }
+}
+.fx-sway {
+  animation-name: fx-sway;
+}
+@keyframes fx-sway {
+  from {
+    transform: translateY(6px) rotate(calc(var(--amp, 11deg) * -1));
+  }
+  to {
+    transform: translateY(-12px) rotate(var(--amp, 11deg));
+  }
+}
+.fx-drift {
+  animation-name: fx-drift;
+}
+@keyframes fx-drift {
+  from {
+    transform: translate(0, 0) rotate(-5deg);
+  }
+  to {
+    transform: translate(var(--amp, 18px), -22px) rotate(6deg);
+  }
+}
+.fx-pulse {
+  animation-name: fx-pulse;
+}
+@keyframes fx-pulse {
+  from {
+    transform: scale(1) rotate(-6deg);
+  }
+  to {
+    transform: scale(var(--amp, 1.2)) rotate(6deg);
+  }
+}
+/* Continuous spin — no alternate, so it never rewinds */
+.fx-spin {
+  animation: fx-spin var(--d, 18s) linear infinite;
+}
+@keyframes fx-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-/* Globe + orbiting plane, used in the About-page hero scene */
-.globe-spin {
-  animation: globe-spin 22s linear infinite;
+/* Globe: continents drift horizontally inside a clipped sphere, which reads
+   as an actual rotating planet — a flat CSS rotate() just looks like a wheel.
+   The tile is duplicated end-to-end so the loop is seamless. */
+.globe-surface {
+  animation: globe-turn 24s linear infinite;
 }
-@keyframes globe-spin {
-  from {
-    transform: rotate(0deg);
-  }
+@keyframes globe-turn {
   to {
-    transform: rotate(360deg);
+    transform: translateX(-100px);
   }
 }
-.orbit-pivot {
-  animation: orbit-spin 9s linear infinite;
+
+/* Plane follows a real elliptical flight path and banks into the direction
+   of travel (offset-rotate: auto) rather than orbiting a pivot rigidly. */
+.plane-flight {
+  offset-path: path("M 220,90 A 140,110 0 0,1 220,310 A 140,110 0 0,1 220,90 L 220,200 A 70,70 0 0,1 360,200 A 70,70 0 0,1 220,200 A 70,70 0 0,0 80,200 A 70,70 0 0,0 220,200 Z");
+  offset-rotate: auto;
+  animation: plane-fly var(--d, 16s) linear infinite;
 }
-@keyframes orbit-spin {
-  from {
-    transform: rotate(0deg);
-  }
+@keyframes plane-fly {
   to {
-    transform: rotate(360deg);
+    offset-distance: 100%;
   }
 }
-/* Counter-rotates at the same speed so the plane icon stays upright while it
-   travels around the orbit instead of tumbling with the pivot. */
-.orbit-counter {
-  animation: orbit-counter-spin 9s linear infinite;
-}
-@keyframes orbit-counter-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-360deg);
+
+@media (prefers-reduced-motion: reduce) {
+  .doodle-float,
+  .fx,
+  .fx-spin,
+  .globe-surface,
+  .plane-flight {
+    animation: none;
   }
 }
 
@@ -238,5 +303,34 @@ a.card-pop:hover {
   a {
     color: inherit;
     text-decoration: none;
+  }
+}
+
+/* Dotted grid backdrop for the About hero band */
+.dot-grid {
+  background-image: radial-gradient(var(--ink) 1.6px, transparent 1.6px);
+  background-size: 24px 24px;
+  opacity: 0.13;
+  pointer-events: none;
+}
+
+/* Fixed-geometry scene box (the plane's offset-path is in px, so the box is a
+   fixed 440x400 and scales down bodily on narrow screens). */
+.hero-scene-box {
+  position: relative;
+  width: 440px;
+  height: 400px;
+  flex: 0 0 auto;
+}
+@media (max-width: 1023px) {
+  .hero-scene-box {
+    transform: scale(0.84);
+    margin: -32px -35px;
+  }
+}
+@media (max-width: 639px) {
+  .hero-scene-box {
+    transform: scale(0.72);
+    margin: -56px -62px;
   }
 }
