@@ -158,3 +158,87 @@ export function InlineDoodle({ children, rotate = 0, className = "" }) {
     </span>
   );
 }
+
+// ── Extra scatter icons for the home hero ──────────────────────────────
+
+export function ButterflyDoodle({ size }) {
+  return (
+    <Svg size={size} strokeWidth="1.7">
+      <path d="M12 7C9 3 3 3.5 3.6 8.6 4.1 12.6 9 12.6 12 11Z" fill="#ff5c8a" />
+      <path d="M12 7c3-4 9-3.5 8.4 1.6C19.9 12.6 15 12.6 12 11Z" fill="#ff5c8a" />
+      <path d="M12 11c-2.4 1-5.8 1.5-6.3 4.4-.5 3 4 3.4 6.3-.4Z" fill="#a06cf5" />
+      <path d="M12 11c2.4 1 5.8 1.5 6.3 4.4.5 3-4 3.4-6.3-.4Z" fill="#a06cf5" />
+      <path d="M12 7v9" />
+      <path d="M11.4 6.6 9.8 4M12.6 6.6 14.2 4" />
+    </Svg>
+  );
+}
+
+export function IceCreamDoodle({ size }) {
+  return (
+    <Svg size={size} strokeWidth="1.7">
+      <path d="M8.6 13h6.8L12 21.5Z" fill="#ff8c42" />
+      <circle cx="9.7" cy="10.4" r="3.3" fill="#ff5c8a" />
+      <circle cx="14.3" cy="10.4" r="3.3" fill="#34d399" />
+      <circle cx="12" cy="7.4" r="3.3" fill="var(--yellow)" />
+    </Svg>
+  );
+}
+
+export function SunglassesDoodle({ size }) {
+  return (
+    <Svg size={size} strokeWidth="1.7">
+      <path d="M2.5 8.5h19" />
+      <path d="M3.5 9h7.2v2.6a3.6 3.6 0 0 1-7.2 0Z" fill="#a06cf5" />
+      <path d="M13.3 9h7.2v2.6a3.6 3.6 0 0 1-7.2 0Z" fill="#a06cf5" />
+      <path d="M10.7 10.2c.8-.6 1.8-.6 2.6 0" />
+    </Svg>
+  );
+}
+
+export function StarDoodle({ size }) {
+  return (
+    <Svg size={size} strokeWidth="1.7">
+      <path d="M12 2.8l2.7 5.9 6.5.7-4.9 4.4 1.4 6.4L12 17l-5.7 3.2 1.4-6.4-4.9-4.4 6.5-.7Z" fill="var(--yellow)" />
+    </Svg>
+  );
+}
+
+export function HandbagDoodle({ size }) {
+  return (
+    <Svg size={size} strokeWidth="1.7">
+      <path d="M3.6 8.6h16.8L18.9 20H5.1Z" fill="#ff5c8a" />
+      <path d="M8.7 8.6V6.8a3.3 3.3 0 0 1 6.6 0v1.8" />
+      <path d="M3.6 12.6h16.8" strokeWidth="1.3" />
+    </Svg>
+  );
+}
+
+export function CloudDoodle({ size }) {
+  return (
+    <Svg size={size} strokeWidth="1.7">
+      <path d="M6.6 17.5a4.1 4.1 0 0 1 .5-8.1 5.6 5.6 0 0 1 10.6 1.4 3.4 3.4 0 0 1-.2 6.7Z" fill="#cfe3ff" />
+    </Svg>
+  );
+}
+
+export function MusicDoodle({ size }) {
+  return (
+    <Svg size={size} strokeWidth="1.8">
+      <path d="M9.4 17.6V5.9l9-2v11.6" />
+      <circle cx="7.1" cy="17.8" r="2.5" fill="var(--red)" />
+      <circle cx="16.1" cy="15.6" r="2.5" fill="var(--red)" />
+    </Svg>
+  );
+}
+
+export function CameraDoodle({ size }) {
+  return (
+    <Svg size={size} strokeWidth="1.7">
+      <rect x="2.6" y="7.4" width="18.8" height="12.2" rx="2.4" fill="#3d9bff" />
+      <path d="M8 7.4 9.4 4.8h5.2L16 7.4" fill="#3d9bff" />
+      <circle cx="12" cy="13.5" r="4.1" fill="var(--paper)" />
+      <circle cx="12" cy="13.5" r="2" fill="var(--cobalt)" />
+    </Svg>
+  );
+}

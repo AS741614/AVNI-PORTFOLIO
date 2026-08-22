@@ -115,16 +115,32 @@ export function CloseIcon(props) {
 }
 
 // Comic starburst — for badges and the hero backdrop.
-export function Starburst({ size = 220, fill = "var(--yellow)", ...props }) {
+export function Starburst({ size = 220, width, height, fill = "var(--yellow)", ...props }) {
+  const w = width ?? size;
+  const h = height ?? size;
+  const ar = h / w;
+
+  // The spike geometry is generated elliptically (radii scaled per axis) and
+  // the viewBox is scaled to match, so a wide burst renders under a *uniform*
+  // scale. Squashing a square burst with preserveAspectRatio="none" instead
+  // would flatten the spikes and thicken the outline on one axis.
   const points = [];
   const spikes = 14;
+  const cy = 50 * ar;
   for (let i = 0; i < spikes * 2; i++) {
     const r = i % 2 === 0 ? 50 : 34;
     const a = (Math.PI * i) / spikes;
-    points.push(`${50 + r * Math.sin(a)},${50 - r * Math.cos(a)}`);
+    points.push(`${50 + r * Math.sin(a)},${cy - r * ar * Math.cos(a)}`);
   }
+
   return (
-    <svg width={size} height={size} viewBox="-4 -4 108 108" aria-hidden="true" {...props}>
+    <svg
+      width={w}
+      height={h}
+      viewBox={`-4 ${-4 * ar} 108 ${108 * ar}`}
+      aria-hidden="true"
+      {...props}
+    >
       <polygon points={points.join(" ")} fill={fill} stroke="var(--ink)" strokeWidth="2" strokeLinejoin="round" />
     </svg>
   );

@@ -235,6 +235,26 @@ a.card-pop:hover {
   }
 }
 
+/* Slow orbit around the Earth. The ring carries the icons; each icon
+   counter-rotates at the same duration so it stays upright instead of
+   tumbling with the ring. */
+.orbit-cw {
+  animation: orbit-cw var(--d, 90s) linear infinite;
+}
+@keyframes orbit-cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.orbit-ccw {
+  animation: orbit-ccw var(--d, 90s) linear infinite;
+}
+@keyframes orbit-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
 /* Globe: continents drift horizontally inside a clipped sphere, which reads
    as an actual rotating planet — a flat CSS rotate() just looks like a wheel.
    The tile is duplicated end-to-end so the loop is seamless. */
@@ -250,7 +270,7 @@ a.card-pop:hover {
 /* Plane follows a real elliptical flight path and banks into the direction
    of travel (offset-rotate: auto) rather than orbiting a pivot rigidly. */
 .plane-flight {
-  offset-path: path("M 220,90 A 140,110 0 0,1 220,310 A 140,110 0 0,1 220,90 L 220,200 A 70,70 0 0,1 360,200 A 70,70 0 0,1 220,200 A 70,70 0 0,0 80,200 A 70,70 0 0,0 220,200 Z");
+  offset-path: path("M 240,100 A 150,120 0 0,1 240,340 A 150,120 0 0,1 240,100 L 240,220 A 75,75 0 0,1 390,220 A 75,75 0 0,1 240,220 A 75,75 0 0,0 90,220 A 75,75 0 0,0 240,220 Z");
   offset-rotate: auto;
   animation: plane-fly var(--d, 16s) linear infinite;
 }
@@ -264,6 +284,8 @@ a.card-pop:hover {
   .doodle-float,
   .fx,
   .fx-spin,
+  .orbit-cw,
+  .orbit-ccw,
   .globe-surface,
   .plane-flight {
     animation: none;
@@ -318,19 +340,19 @@ a.card-pop:hover {
    fixed 440x400 and scales down bodily on narrow screens). */
 .hero-scene-box {
   position: relative;
-  width: 440px;
-  height: 400px;
+  width: 480px;
+  height: 440px;
   flex: 0 0 auto;
 }
 @media (max-width: 1023px) {
   .hero-scene-box {
     transform: scale(0.84);
-    margin: -32px -35px;
+    margin: -35px -38px;
   }
 }
 @media (max-width: 639px) {
   .hero-scene-box {
     transform: scale(0.72);
-    margin: -56px -62px;
+    margin: -62px -67px;
   }
 }

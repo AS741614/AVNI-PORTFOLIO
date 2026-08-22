@@ -5,14 +5,8 @@ import StoryCard from "@/components/StoryCard";
 import Newsletter from "@/components/Newsletter";
 import InstagramStrip from "@/components/InstagramStrip";
 import { PlayIcon, Starburst, CompassIcon } from "@/components/icons";
-import {
-  Doodle,
-  HeartDoodle,
-  SparkleDoodle,
-  FlowerDoodle,
-  PlaneDoodle,
-  SmileyDoodle,
-} from "@/components/Doodles";
+import { Doodle, FlowerDoodle, PlaneDoodle } from "@/components/Doodles";
+import HeroDoodles from "@/components/HeroDoodles";
 
 export default async function Home() {
   const stories = await getStories();
@@ -23,20 +17,9 @@ export default async function Home() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-y-0 right-0 w-1/2 halftone-red hidden sm:block" aria-hidden="true" />
-        <Doodle className="hidden sm:block" style={{ top: "9%", right: "4%" }} rotate={8}>
-          <PlaneDoodle size={42} />
-        </Doodle>
-        <Doodle className="hidden lg:block" style={{ top: "14%", left: "51%" }} rotate={-12}>
-          <SparkleDoodle size={30} />
-        </Doodle>
-        <Doodle className="hidden lg:block" style={{ bottom: "12%", left: "45%" }} rotate={10}>
-          <HeartDoodle size={26} />
-        </Doodle>
-        <Doodle className="hidden sm:block" style={{ bottom: "8%", right: "42%" }} rotate={-8}>
-          <SmileyDoodle size={26} />
-        </Doodle>
-        <div className="container-x py-16 sm:py-20 grid gap-10 sm:grid-cols-[1.3fr_1fr] items-center relative">
+        <div className="absolute inset-0 halftone-red hidden sm:block" aria-hidden="true" />
+        <HeroDoodles />
+        <div className="container-x py-16 sm:py-20 grid gap-10 sm:grid-cols-[1fr_1fr] items-center relative">
           <div>
             <span className="sticker sticker-yellow mb-4">{SITE.tagline}</span>
             <h1 className="font-display text-3xl sm:text-5xl mb-5 mt-3" style={{ fontFamily: "var(--font-display)" }}>
@@ -56,10 +39,10 @@ export default async function Home() {
           </div>
 
           {/* Pop-art visual: latest video still in an outlined tilted frame over a starburst */}
-          <div className="relative flex items-center justify-center py-6">
-            <Starburst size={370} className="absolute" style={{ transform: "rotate(8deg)" }} />
+          <div className="relative flex items-center justify-center py-6" style={{ transform: "translateX(10%)" }}>
+            <Starburst width={667} height={375} className="absolute" style={{ transform: "rotate(8deg)" }} />
             <div
-              className="relative aspect-square w-64 sm:w-72 overflow-hidden rounded-2xl"
+              className="relative aspect-video w-full max-w-[26.6rem] sm:max-w-[29.9rem] overflow-hidden rounded-2xl"
               style={{ border: "3px solid var(--ink)", boxShadow: "6px 6px 0 var(--ink)", transform: "rotate(2deg)", background: "#fff" }}
             >
               {heroThumb ? (
@@ -90,7 +73,8 @@ export default async function Home() {
           <span className="sticker">↻ auto-synced from YouTube</span>
         </div>
         <p className="text-sm mb-6 max-w-lg" style={{ color: "var(--muted)" }}>
-          New video on YouTube? It shows up here on its own — synced straight from the channel, no manual reposting.
+          Ireland, one story at a time — the road trips, the honest student-life bits, and everything I wish
+          someone had told me first.
         </p>
 
         {usingSample && (
