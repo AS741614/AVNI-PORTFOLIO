@@ -50,7 +50,7 @@ function rand(min, max) {
   return min + Math.random() * (max - min);
 }
 
-const ICON_COUNT = 30;
+const ICON_COUNT = 36;
 const TEXT_BUFFER = 33; // px kept clear around every nav link / CTA
 const CELL_ATTEMPTS = 20;
 
