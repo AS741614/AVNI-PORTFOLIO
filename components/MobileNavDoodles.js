@@ -50,7 +50,7 @@ function rand(min, max) {
   return min + Math.random() * (max - min);
 }
 
-const ICON_COUNT = 46;
+const ICON_COUNT = 30;
 const TEXT_BUFFER = 18; // px kept clear around every nav link / CTA
 const MAX_ATTEMPTS = 60;
 
@@ -100,7 +100,7 @@ export default function MobileNavDoodles({ panelRef, textRef }) {
           left: x,
           top: y,
           rotate: rand(-18, 18).toFixed(1),
-          size: Math.round(rand(16, 26)),
+          size: Math.round(rand(22, 34)),
           fx,
           d: `${rand(3.6, 6.6).toFixed(1)}s`,
           delay: `${rand(0, 2).toFixed(2)}s`,

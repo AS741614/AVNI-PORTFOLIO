@@ -275,8 +275,13 @@ a.card-pop:hover {
 
 /* Plane follows a real elliptical flight path and banks into the direction
    of travel (offset-rotate: auto) rather than orbiting a pivot rigidly. */
+/* Big elliptical orbit around the globe, then a smooth banked swoop (not a
+   straight cut) into a tight figure-8 near the surface, and an equally
+   smooth swoop back out to re-enter the orbit — every join shares position
+   AND direction with its neighbour, so the plane never has to "snap" onto a
+   new heading. */
 .plane-flight {
-  offset-path: path("M 250,120 A 155,130 0 0,1 250,380 A 155,130 0 0,1 250,120 L 250,250 A 78,78 0 0,1 406,250 A 78,78 0 0,1 250,250 A 78,78 0 0,0 94,250 A 78,78 0 0,0 250,250 Z");
+  offset-path: path("M 250,120 A 155,130 0 0,1 250,380 A 155,130 0 0,1 250,120 C 360,120 250,360 250,250 A 78,78 0 0,1 406,250 A 78,78 0 0,1 250,250 A 78,78 0 0,0 94,250 A 78,78 0 0,0 250,250 C 250,140 140,120 250,120 Z");
   offset-rotate: auto;
   animation: plane-fly var(--d, 16s) linear infinite;
 }
