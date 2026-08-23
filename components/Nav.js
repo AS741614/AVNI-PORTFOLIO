@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SITE } from "@/lib/config";
 import { MenuIcon, CloseIcon, PlayIcon } from "@/components/icons";
+import MobileNavDoodles from "@/components/MobileNavDoodles";
 
 const links = [
   { href: "/", label: "Home" },
@@ -81,7 +82,8 @@ export default function Nav() {
             borderTop: "2px solid var(--ink)",
           }}
         >
-          <div className="container-x py-8 flex flex-col gap-2">
+          <MobileNavDoodles />
+          <div className="container-x py-8 flex flex-col items-center text-center gap-3 relative" style={{ zIndex: 1 }}>
             {links.map((l, i) => {
               const active = pathname === l.href;
               return (
@@ -104,7 +106,7 @@ export default function Nav() {
               href={SITE.instagram.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-pop-ghost mt-6 self-start"
+              className="btn-pop-ghost mt-6"
             >
               Follow on Instagram
             </a>
