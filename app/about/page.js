@@ -105,7 +105,7 @@ export default async function AboutPage() {
             <div className="order-1 lg:order-2">
               <div
                 className="relative flex items-center justify-center py-6"
-                style={{ transform: "translateX(10%)" }}
+                style={{ transform: "translate(10%, -20%)" }}
               >
                 <Starburst width={667} height={375} className="absolute" style={{ transform: "rotate(8deg)" }} />
                 <VideoSlideshow stories={stories} />
