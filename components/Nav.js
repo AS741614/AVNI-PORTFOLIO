@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SITE } from "@/lib/config";
@@ -19,6 +19,8 @@ const links = [
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const panelRef = useRef(null);
+  const textRef = useRef(null);
 
   return (
     <header
@@ -70,6 +72,7 @@ export default function Nav() {
       {/* Mobile slide-down panel */}
       {open && (
         <div
+          ref={panelRef}
           className="lg:hidden halftone"
           style={{
             position: "absolute",
@@ -82,8 +85,8 @@ export default function Nav() {
             borderTop: "2px solid var(--ink)",
           }}
         >
-          <MobileNavDoodles />
-          <div className="container-x py-8 flex flex-col items-center text-center gap-3 relative" style={{ zIndex: 1 }}>
+          <MobileNavDoodles panelRef={panelRef} textRef={textRef} />
+          <div ref={textRef} className="container-x py-8 flex flex-col items-center text-center gap-3 relative" style={{ zIndex: 1 }}>
             {links.map((l, i) => {
               const active = pathname === l.href;
               return (

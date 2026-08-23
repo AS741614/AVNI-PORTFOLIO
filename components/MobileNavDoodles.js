@@ -1,3 +1,5 @@
+"use client";
+import { useEffect, useState } from "react";
 import {
   HeartDoodle,
   SparkleDoodle,
@@ -19,7 +21,8 @@ import {
   CameraDoodle,
 } from "@/components/Doodles";
 
-// Every small pop-art icon on the site, one of each.
+// Every small pop-art icon on the site. Repeated (duplicates allowed) to
+// fill the drawer densely.
 const ICONS = [
   HeartDoodle,
   SparkleDoodle,
@@ -47,58 +50,83 @@ function rand(min, max) {
   return min + Math.random() * (max - min);
 }
 
-// Jittered grid: the plane is divided into even cells (one per icon, so
-// coverage is guaranteed equal), then each icon is nudged within its own
-// cell by a random amount. That's what keeps it from reading as either a
-// rigid grid or a clustered mess — every icon owns its own patch of space,
-// but no two land in a predictable spot.
-// Computed once at module load (this file only ever renders client-side,
-// after the user opens the drawer, so there's no SSR/hydration mismatch to
-// worry about) — stable for the session, reshuffles on a full page reload.
-function buildLayout() {
-  // Two narrow side strips (left ~2-10%, right ~90-98%) hugging the drawer
-  // edges only — the nav links are centred and "Work with me" is wide
-  // enough that even a generous margin gets close on a 320px screen, so
-  // icons are kept strictly in the outer strips, never in the 10-90% band
-  // where text can land. Small icon size keeps each one's own footprint
-  // inside its strip too, so nothing ever touches a letter.
-  const columns = [6, 94]; // % from left, jittered ±4 below
-  const rowsPerCol = ICONS.length / columns.length; // 9
-  const cellH = 100 / rowsPerCol;
-  const items = [];
-  let i = 0;
-  for (const baseX of columns) {
-    for (let r = 0; r < rowsPerCol; r++) {
-      const Icon = ICONS[i % ICONS.length];
-      const baseY = cellH * r + cellH / 2;
-      const fx = FX[i % FX.length];
-      items.push({
-        Icon,
-        left: `${(baseX + rand(-4, 4)).toFixed(1)}%`,
-        top: `${(baseY + rand(-cellH * 0.3, cellH * 0.3)).toFixed(1)}%`,
-        rotate: rand(-16, 16).toFixed(1),
-        size: Math.round(rand(18, 26)),
-        fx,
-        d: `${rand(3.6, 6.6).toFixed(1)}s`,
-        delay: `${rand(0, 2).toFixed(2)}s`,
-        amp: fx === "pulse" ? rand(1.1, 1.22).toFixed(2) : `${Math.round(rand(6, 14))}px`,
+const ICON_COUNT = 46;
+const TEXT_BUFFER = 18; // px kept clear around every nav link / CTA
+const MAX_ATTEMPTS = 60;
+
+// Scatters icons freely across the whole drawer — genuinely random, not a
+// column grid — while measuring the real rendered position of every nav
+// link and the Instagram button and rejecting any icon whose footprint
+// would land on top of one. Icons can (and do) repeat; the only rule is
+// "never touch text."
+export default function MobileNavDoodles({ panelRef, textRef }) {
+  const [layout, setLayout] = useState(null);
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    const textEl = textRef.current;
+    if (!panel || !textEl) return;
+
+    const raf = requestAnimationFrame(() => {
+      const panelRect = panel.getBoundingClientRect();
+      const w = panel.scrollWidth;
+      const h = panel.scrollHeight;
+
+      const textRects = Array.from(textEl.querySelectorAll("a")).map((el) => {
+        const r = el.getBoundingClientRect();
+        return {
+          left: r.left - panelRect.left - TEXT_BUFFER,
+          right: r.right - panelRect.left + TEXT_BUFFER,
+          top: r.top - panelRect.top - TEXT_BUFFER,
+          bottom: r.bottom - panelRect.top + TEXT_BUFFER,
+        };
       });
-      i++;
-    }
-  }
-  return items;
-}
 
-const LAYOUT = buildLayout();
+      const items = [];
+      for (let i = 0; i < ICON_COUNT; i++) {
+        let x, y, clear, attempts = 0;
+        do {
+          x = rand(16, w - 16);
+          y = rand(16, h - 16);
+          clear = !textRects.some((r) => x > r.left && x < r.right && y > r.top && y < r.bottom);
+          attempts++;
+        } while (!clear && attempts < MAX_ATTEMPTS);
+        if (!clear) continue;
 
-// Fills the mobile nav drawer with the full icon set in a jittered grid —
-// evenly spread, never clustered. Sits behind the centred nav links.
-// Exclusive to the mobile drawer (the desktop nav never renders this).
-export default function MobileNavDoodles() {
+        const Icon = ICONS[Math.floor(rand(0, ICONS.length))];
+        const fx = FX[Math.floor(rand(0, FX.length))];
+        items.push({
+          Icon,
+          left: x,
+          top: y,
+          rotate: rand(-18, 18).toFixed(1),
+          size: Math.round(rand(16, 26)),
+          fx,
+          d: `${rand(3.6, 6.6).toFixed(1)}s`,
+          delay: `${rand(0, 2).toFixed(2)}s`,
+          amp: fx === "pulse" ? rand(1.1, 1.22).toFixed(2) : `${Math.round(rand(6, 14))}px`,
+        });
+      }
+      setLayout({ items, w, h });
+    });
+
+    return () => cancelAnimationFrame(raf);
+  }, [panelRef, textRef]);
+
+  if (!layout) return null;
+
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }} aria-hidden="true">
-      {LAYOUT.map(({ Icon, left, top, rotate, size, fx, d, delay, amp }, i) => (
-        <span key={i} className="doodle" style={{ left, top, transform: `translate(-50%, -50%) rotate(${rotate}deg)` }}>
+    <div
+      className="absolute top-0 left-0 overflow-hidden pointer-events-none"
+      style={{ width: layout.w, height: layout.h, zIndex: 0 }}
+      aria-hidden="true"
+    >
+      {layout.items.map(({ Icon, left, top, rotate, size, fx, d, delay, amp }, i) => (
+        <span
+          key={i}
+          className="doodle"
+          style={{ left: `${left}px`, top: `${top}px`, transform: `translate(-50%, -50%) rotate(${rotate}deg)` }}
+        >
           <span className={`fx fx-${fx}`} style={{ display: "block", "--d": d, "--delay": delay, "--amp": amp }}>
             <Icon size={size} />
           </span>
