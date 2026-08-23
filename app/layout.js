@@ -9,6 +9,16 @@ const display = Archivo_Black({ weight: "400", subsets: ["latin"], variable: "--
 const sans = Space_Grotesk({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 const script = Caveat({ subsets: ["latin"], variable: "--font-script", display: "swap" });
 
+// Locks pinch-zoom and horizontal swipe-to-zoom on mobile browsers — the
+// site is fixed-layout by design (fixed-px hero scene, etc.), so letting
+// visitors zoom breaks the composition rather than helping them.
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export const metadata = {
   metadataBase: new URL("https://avniinireland.com"),
   title: {

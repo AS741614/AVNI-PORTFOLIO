@@ -24,7 +24,7 @@ export default function VideoSlideshow({ stories }) {
 
   return (
     <div
-      className="aspect-video w-full max-w-[26.6rem] sm:max-w-[29.9rem] rounded-2xl overflow-hidden relative"
+      className="aspect-video w-full max-w-[240px] sm:max-w-[26.6rem] lg:max-w-[29.9rem] rounded-2xl overflow-hidden relative"
       style={{ border: "3px solid var(--ink)", boxShadow: "6px 6px 0 var(--ink)", transform: "rotate(2deg)", background: "#fff" }}
     >
       {isPlaying ? (

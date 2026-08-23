@@ -30,6 +30,28 @@ function Float({ children, className = "", style, rotate = 0, fx = "bob", d = "5
   );
 }
 
+// Mobile-only icons (visible below sm, hidden from sm up — the desktop sets
+// below use "hidden sm:block" etc., so the two layers never double up).
+// Small (18-22px) and placed only in the real empty gaps of the stacked
+// mobile layout — verified against actual screenshots at 320-414px, never
+// over the headline, paragraph, buttons, or video/orbit content.
+const MOBILE_HOME = [
+  { style: { top: "5%", left: "4%" }, rotate: -10, fx: "drift", d: "6.2s", amp: "10px", node: <CameraDoodle size={20} /> },
+  { style: { top: "4%", right: "5%" }, rotate: 8, fx: "bob", d: "5.4s", delay: ".4s", amp: "9px", node: <CloudDoodle size={20} /> },
+  { style: { top: "14%", right: "4%" }, rotate: -8, fx: "pulse", d: "4.1s", delay: ".9s", amp: "1.16", node: <StarDoodle size={18} /> },
+  { style: { top: "35%", right: "4%" }, rotate: 11, fx: "sway", d: "5.6s", delay: ".2s", node: <SparkleDoodle size={20} /> },
+  { style: { top: "49%", right: "4%" }, rotate: -9, fx: "bob", d: "4.7s", delay: "1.2s", amp: "8px", node: <HeartDoodle size={18} /> },
+  { style: { top: "68%", left: "4%" }, rotate: 7, fx: "sway", d: "6.1s", delay: ".7s", node: <MusicDoodle size={18} /> },
+  { style: { top: "68%", right: "4%" }, rotate: -12, fx: "drift", d: "6.6s", delay: "1.5s", amp: "9px", node: <ButterflyDoodle size={20} /> },
+];
+
+const MOBILE_ABOUT = [
+  { style: { top: "1%", left: "4%" }, rotate: -9, fx: "sway", d: "5.6s", node: <SparkleDoodle size={20} /> },
+  { style: { top: "1%", right: "5%" }, rotate: 10, fx: "pulse", d: "4.3s", delay: ".6s", amp: "1.18", node: <StarDoodle size={18} /> },
+  { style: { top: "21%", right: "4%" }, rotate: -7, fx: "bob", d: "4.9s", delay: "1.1s", amp: "8px", node: <HeartDoodle size={18} /> },
+  { style: { top: "47%", left: "3%" }, rotate: 9, fx: "drift", d: "6.4s", delay: ".3s", amp: "10px", node: <ButterflyDoodle size={20} /> },
+];
+
 // Home hero: copy on the left, video on the right. Icons fill the outer
 // margins, the gap between columns, and the band under the buttons.
 const HOME = [
@@ -73,11 +95,17 @@ const ABOUT = [
 // so they never line up into rows, columns or edge clusters; the denser ones
 // only appear once the viewport is wide enough to have room.
 export default function HeroDoodles({ variant = "home" }) {
-  const items = variant === "about" ? ABOUT : HOME;
+  const desktop = variant === "about" ? ABOUT : HOME;
+  const mobile = variant === "about" ? MOBILE_ABOUT : MOBILE_HOME;
   return (
     <>
-      {items.map(({ cls, style, rotate, fx, d, delay, amp, node }, i) => (
-        <Float key={i} className={cls} style={style} rotate={rotate} fx={fx} d={d} delay={delay} amp={amp}>
+      {mobile.map(({ style, rotate, fx, d, delay, amp, node }, i) => (
+        <Float key={`m${i}`} className="block sm:hidden" style={style} rotate={rotate} fx={fx} d={d} delay={delay} amp={amp}>
+          {node}
+        </Float>
+      ))}
+      {desktop.map(({ cls, style, rotate, fx, d, delay, amp, node }, i) => (
+        <Float key={`d${i}`} className={cls} style={style} rotate={rotate} fx={fx} d={d} delay={delay} amp={amp}>
           {node}
         </Float>
       ))}

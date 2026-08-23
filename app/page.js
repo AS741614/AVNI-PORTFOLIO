@@ -19,7 +19,7 @@ export default async function Home() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 halftone-red hidden sm:block" aria-hidden="true" />
         <HeroDoodles />
-        <div className="container-x py-16 sm:py-20 grid gap-10 sm:grid-cols-[1fr_1fr] items-center relative">
+        <div className="container-x py-16 sm:py-20 grid gap-10 lg:grid-cols-[1fr_1fr] items-center relative">
           <div>
             <span className="sticker sticker-yellow mb-4">{SITE.tagline}</span>
             <h1 className="font-display text-3xl sm:text-5xl mb-5 mt-3" style={{ fontFamily: "var(--font-display)" }}>
@@ -39,10 +39,15 @@ export default async function Home() {
           </div>
 
           {/* Pop-art visual: latest video still in an outlined tilted frame over a starburst */}
-          <div className="relative flex items-center justify-center py-6" style={{ transform: "translateX(10%)" }}>
-            <Starburst width={667} height={375} className="absolute" style={{ transform: "rotate(8deg)" }} />
+          <div className="relative flex items-center justify-center py-6 translate-x-0 lg:translate-x-[10%]">
+            <Starburst
+              width={667}
+              height={375}
+              className="absolute w-[280px] h-[157px] sm:w-[596px] sm:h-[335px] lg:w-[667px] lg:h-[375px]"
+              style={{ transform: "rotate(8deg)" }}
+            />
             <div
-              className="relative aspect-video w-full max-w-[26.6rem] sm:max-w-[29.9rem] overflow-hidden rounded-2xl"
+              className="relative aspect-video w-full max-w-[240px] sm:max-w-[26.6rem] lg:max-w-[29.9rem] overflow-hidden rounded-2xl"
               style={{ border: "3px solid var(--ink)", boxShadow: "6px 6px 0 var(--ink)", transform: "rotate(2deg)", background: "#fff" }}
             >
               {heroThumb ? (

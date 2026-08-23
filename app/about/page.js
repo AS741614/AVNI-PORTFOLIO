@@ -103,11 +103,13 @@ export default async function AboutPage() {
               <AboutHeroScene />
             </div>
             <div className="order-1 lg:order-2">
-              <div
-                className="relative flex items-center justify-center py-6"
-                style={{ transform: "translate(10%, -20%)" }}
-              >
-                <Starburst width={667} height={375} className="absolute" style={{ transform: "rotate(8deg)" }} />
+              <div className="relative flex items-center justify-center py-6 translate-x-0 lg:translate-x-[10%] lg:-translate-y-[20%]">
+                <Starburst
+                  width={667}
+                  height={375}
+                  className="absolute w-[280px] h-[157px] sm:w-[596px] sm:h-[335px] md:w-[667px] md:h-[375px]"
+                  style={{ transform: "rotate(8deg)" }}
+                />
                 <VideoSlideshow stories={stories} />
               </div>
             </div>
