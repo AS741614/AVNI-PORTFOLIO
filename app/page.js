@@ -137,15 +137,6 @@ export default async function Home() {
             >
               EBM Corporation →
             </a>
-            <a
-              href="https://photossense.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-bold"
-              style={{ color: "var(--red)" }}
-            >
-              PhotosSense →
-            </a>
             <Link href="/work-with-me" className="text-sm font-bold sm:ml-auto" style={{ color: "var(--ink)" }}>
               See all ways to collaborate →
             </Link>

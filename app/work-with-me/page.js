@@ -96,14 +96,9 @@ const collaborators = [
   {
     name: "EBM Corporation",
     url: "https://www.ebmcorporation.com/",
-    tag: "builds businesses",
-    desc: "A technology and consulting company that builds businesses instead of writing strategy decks — custom software, AI-powered platforms, and modernization for small businesses that don't have (or need) a big full-time tech team. This is who I team up with when a business needs real builders.",
-  },
-  {
-    name: "PhotosSense",
-    url: "https://photossense.com/",
-    tag: "event photos that deliver themselves",
-    desc: "An AI-powered photo platform for photographers, studios, and event teams: guests find their photos with a selfie (AI face search), galleries carry the photographer's own branding, and beat-synced highlight reels generate themselves. Privacy-first, EU-hosted, GDPR-compliant — built in-house by EBM.",
+    tag: "I'm the brand face",
+    desc: "EBM builds real technology for businesses that don't have — or need — a big in-house tech team: custom software, AI-powered platforms, and modernization, aimed squarely at empowering micro and small businesses that normally get priced out of proper tech. I'm EBM's brand face, so if you'd like to learn more, message me directly and I'll connect you with the right project manager for your requirements.",
+    contactViaMe: true,
   },
 ];
 
@@ -192,22 +187,27 @@ export default function WorkWithMePage() {
 
       <div className="grid gap-6 sm:grid-cols-2 mb-14">
         {collaborators.map((c) => (
-          <a
-            key={c.name}
-            href={c.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="card-pop p-5 block relative"
-          >
+          <div key={c.name} className="card-pop p-5 relative">
             <span className="sticker absolute -top-3 right-4">{c.tag}</span>
             <p className="font-display text-lg mb-2 mt-1" style={{ fontFamily: "var(--font-display)" }}>
               {c.name}
             </p>
             <p className="text-sm mb-3" style={{ color: "var(--muted)" }}>{c.desc}</p>
-            <span className="text-sm font-bold" style={{ color: "var(--red)" }}>
-              Visit {c.name.split(" ")[0].toLowerCase()} →
-            </span>
-          </a>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-sm font-bold" style={{ color: "var(--ink)" }}>
+                Visit {c.name.split(" ")[0].toLowerCase()} →
+              </a>
+              {c.contactViaMe && (
+                <a
+                  href={`mailto:${SITE.email}?subject=Learn more about EBM`}
+                  className="text-sm font-bold"
+                  style={{ color: "var(--red)" }}
+                >
+                  Contact me about EBM →
+                </a>
+              )}
+            </div>
+          </div>
         ))}
 
         {/* Future collaboration invite */}
