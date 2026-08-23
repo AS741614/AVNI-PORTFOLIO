@@ -328,14 +328,6 @@ a.card-pop:hover {
   }
 }
 
-/* Dotted grid backdrop for the About hero band */
-.dot-grid {
-  background-image: radial-gradient(var(--ink) 1.6px, transparent 1.6px);
-  background-size: 24px 24px;
-  opacity: 0.13;
-  pointer-events: none;
-}
-
 /* Fixed-geometry scene box (the plane's offset-path is in px, so the box is a
    fixed 440x400 and scales down bodily on narrow screens). */
 .hero-scene-box {

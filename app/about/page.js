@@ -3,7 +3,8 @@ import { getStories } from "@/lib/youtube";
 import Newsletter from "@/components/Newsletter";
 import VideoSlideshow from "@/components/VideoSlideshow";
 import AboutHeroScene from "@/components/AboutHeroScene";
-import { PlayIcon } from "@/components/icons";
+import HeroDoodles from "@/components/HeroDoodles";
+import { Starburst, PlayIcon } from "@/components/icons";
 import {
   Doodle,
   InlineDoodle,
@@ -87,7 +88,8 @@ export default async function AboutPage() {
 
       {/* ── Full-width hero band, dotted grid behind everything ── */}
       <section className="relative overflow-hidden" style={{ borderBottom: "2px solid var(--ink)" }}>
-        <div className="dot-grid absolute inset-0" aria-hidden="true" />
+        <div className="halftone-red absolute inset-0" aria-hidden="true" />
+        <HeroDoodles variant="about" />
         <div className="container-x py-10 sm:py-14 relative">
           <h1 className="font-display text-4xl sm:text-5xl mb-8" style={{ fontFamily: "var(--font-display)" }}>
             Hi, I'm <span className="marker">Avni</span>
@@ -101,7 +103,13 @@ export default async function AboutPage() {
               <AboutHeroScene />
             </div>
             <div className="order-1 lg:order-2">
-              <VideoSlideshow stories={stories} />
+              <div
+                className="relative flex items-center justify-center py-6"
+                style={{ transform: "translateX(10%)" }}
+              >
+                <Starburst width={667} height={375} className="absolute" style={{ transform: "rotate(8deg)" }} />
+                <VideoSlideshow stories={stories} />
+              </div>
             </div>
           </div>
 
