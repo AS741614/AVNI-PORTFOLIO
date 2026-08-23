@@ -51,7 +51,7 @@ function rand(min, max) {
 }
 
 const ICON_COUNT = 30;
-const TEXT_BUFFER = 18; // px kept clear around every nav link / CTA
+const TEXT_BUFFER = 33; // px kept clear around every nav link / CTA
 const CELL_ATTEMPTS = 20;
 
 // Jittered grid: the panel is divided into one cell per icon (so coverage
