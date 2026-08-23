@@ -60,10 +60,11 @@ export default function VideoSlideshow({ stories }) {
             style={{ background: "rgba(0,0,0,0.15)" }}
           >
             <span
-              className="flex items-center justify-center rounded-full"
-              style={{ width: 56, height: 56, background: "var(--red)", color: "#fff", border: "2px solid var(--ink)" }}
+              className="flex items-center justify-center rounded-full w-10 h-10 sm:w-14 sm:h-14"
+              style={{ background: "var(--red)", color: "#fff", border: "2px solid var(--ink)" }}
             >
-              <PlayIcon size={22} />
+              <PlayIcon size={16} className="sm:hidden" />
+              <PlayIcon size={22} className="hidden sm:block" />
             </span>
           </button>
           <span className="sticker absolute bottom-3 right-4 pointer-events-none">tap to play</span>

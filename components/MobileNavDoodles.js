@@ -52,13 +52,12 @@ function rand(min, max) {
 
 const ICON_COUNT = 30;
 const TEXT_BUFFER = 18; // px kept clear around every nav link / CTA
-const MAX_ATTEMPTS = 60;
+const CELL_ATTEMPTS = 20;
 
-// Scatters icons freely across the whole drawer — genuinely random, not a
-// column grid — while measuring the real rendered position of every nav
-// link and the Instagram button and rejecting any icon whose footprint
-// would land on top of one. Icons can (and do) repeat; the only rule is
-// "never touch text."
+// Jittered grid: the panel is divided into one cell per icon (so coverage
+// stays even, not clumped like plain random placement), then each icon is
+// nudged to a random spot within its own cell — nudging retried a few times
+// per cell against the real measured text boxes so nothing lands on text.
 export default function MobileNavDoodles({ panelRef, textRef }) {
   const [layout, setLayout] = useState(null);
 
@@ -81,31 +80,43 @@ export default function MobileNavDoodles({ panelRef, textRef }) {
           bottom: r.bottom - panelRect.top + TEXT_BUFFER,
         };
       });
+      const isClear = (x, y) => !textRects.some((r) => x > r.left && x < r.right && y > r.top && y < r.bottom);
+
+      const cols = Math.max(1, Math.round(Math.sqrt((ICON_COUNT * w) / h)));
+      const rows = Math.ceil(ICON_COUNT / cols);
+      const cellW = w / cols;
+      const cellH = h / rows;
 
       const items = [];
-      for (let i = 0; i < ICON_COUNT; i++) {
-        let x, y, clear, attempts = 0;
-        do {
-          x = rand(16, w - 16);
-          y = rand(16, h - 16);
-          clear = !textRects.some((r) => x > r.left && x < r.right && y > r.top && y < r.bottom);
-          attempts++;
-        } while (!clear && attempts < MAX_ATTEMPTS);
-        if (!clear) continue;
+      let i = 0;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          if (i >= ICON_COUNT) break;
+          const cx0 = c * cellW, cy0 = r * cellH;
+          let x, y, clear, attempts = 0;
+          do {
+            x = rand(cx0 + 14, cx0 + cellW - 14);
+            y = rand(cy0 + 14, cy0 + cellH - 14);
+            clear = isClear(x, y);
+            attempts++;
+          } while (!clear && attempts < CELL_ATTEMPTS);
+          i++;
+          if (!clear) continue;
 
-        const Icon = ICONS[Math.floor(rand(0, ICONS.length))];
-        const fx = FX[Math.floor(rand(0, FX.length))];
-        items.push({
-          Icon,
-          left: x,
-          top: y,
-          rotate: rand(-18, 18).toFixed(1),
-          size: Math.round(rand(22, 34)),
-          fx,
-          d: `${rand(3.6, 6.6).toFixed(1)}s`,
-          delay: `${rand(0, 2).toFixed(2)}s`,
-          amp: fx === "pulse" ? rand(1.1, 1.22).toFixed(2) : `${Math.round(rand(6, 14))}px`,
-        });
+          const Icon = ICONS[Math.floor(rand(0, ICONS.length))];
+          const fx = FX[Math.floor(rand(0, FX.length))];
+          items.push({
+            Icon,
+            left: x,
+            top: y,
+            rotate: rand(-18, 18).toFixed(1),
+            size: Math.round(rand(22, 34)),
+            fx,
+            d: `${rand(3.6, 6.6).toFixed(1)}s`,
+            delay: `${rand(0, 2).toFixed(2)}s`,
+            amp: fx === "pulse" ? rand(1.1, 1.22).toFixed(2) : `${Math.round(rand(6, 14))}px`,
+          });
+        }
       }
       setLayout({ items, w, h });
     });

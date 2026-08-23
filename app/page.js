@@ -7,17 +7,17 @@ import InstagramStrip from "@/components/InstagramStrip";
 import { PlayIcon, Starburst, CompassIcon } from "@/components/icons";
 import { Doodle, FlowerDoodle, PlaneDoodle } from "@/components/Doodles";
 import HeroDoodles from "@/components/HeroDoodles";
+import VideoSlideshow from "@/components/VideoSlideshow";
 
 export default async function Home() {
   const stories = await getStories();
   const usingSample = stories[0]?.sample;
-  const heroThumb = stories[0]?.thumbnail;
 
   return (
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 halftone-red hidden sm:block" aria-hidden="true" />
+        <div className="absolute inset-0 halftone-red" aria-hidden="true" />
         <HeroDoodles />
         <div className="container-x py-16 sm:py-20 grid gap-10 lg:grid-cols-[1fr_1fr] items-center relative">
           <div>
@@ -46,19 +46,7 @@ export default async function Home() {
               className="absolute w-[280px] h-[157px] sm:w-[596px] sm:h-[335px] lg:w-[667px] lg:h-[375px]"
               style={{ transform: "rotate(8deg)" }}
             />
-            <div
-              className="relative aspect-video w-full max-w-[240px] sm:max-w-[26.6rem] lg:max-w-[29.9rem] overflow-hidden rounded-2xl"
-              style={{ border: "3px solid var(--ink)", boxShadow: "6px 6px 0 var(--ink)", transform: "rotate(2deg)", background: "#fff" }}
-            >
-              {heroThumb ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={heroThumb} alt="Latest video from Avni" className="w-full h-full object-cover" />
-              ) : (
-                <div className="w-full h-full halftone flex items-center justify-center" style={{ color: "var(--red)" }}>
-                  <PlayIcon size={48} />
-                </div>
-              )}
-            </div>
+            <VideoSlideshow stories={stories} />
             <span className="sticker sticker-red absolute bottom-2 sm:bottom-4 right-2 sm:right-6" style={{ transform: "rotate(4deg)" }}>
               fresh from YouTube
             </span>
