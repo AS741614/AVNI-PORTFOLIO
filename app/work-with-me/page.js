@@ -100,6 +100,12 @@ const collaborators = [
     desc: "EBM builds real technology for businesses that don't have — or need — a big in-house tech team: custom software, AI-powered platforms, and modernization, aimed squarely at empowering micro and small businesses that normally get priced out of proper tech. I'm EBM's brand face, so if you'd like to learn more, message me directly and I'll connect you with the right project manager for your requirements.",
     contactViaMe: true,
   },
+  {
+    name: "PhotosSense",
+    url: "https://photossense.com/",
+    tag: "event photos that deliver themselves",
+    desc: "An AI-powered photo platform for photographers, studios, and event teams: guests find their photos with a selfie (AI face search), galleries carry the photographer's own branding, and beat-synced highlight reels generate themselves. Privacy-first, EU-hosted, GDPR-compliant — built in-house by EBM.",
+  },
 ];
 
 export default function WorkWithMePage() {
